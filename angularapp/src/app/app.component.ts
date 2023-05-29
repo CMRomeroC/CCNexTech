@@ -8,7 +8,7 @@ import { StoriesService } from './services/stories.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'angularapp';
+  title = 'newestStoriesApp';
   stories: any = [];
   story: any = null;
   idnumber = 36002216;

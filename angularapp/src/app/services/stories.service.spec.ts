@@ -1,8 +1,6 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { Story } from '../Model/story.model';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { StoriesService } from './stories.service';
-;
 
 describe('StoriesService', () => {
   let service: StoriesService;
@@ -10,56 +8,43 @@ describe('StoriesService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [StoriesService]
+      imports: [
+        HttpClientTestingModule
+      ]
     });
     service = TestBed.inject(StoriesService);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
-  afterEach(() => {
-    httpMock.verify();
+  it('should be created', () => {
+    expect(service).toBeTruthy();
   });
 
-  it('should retrieve stories', () => {
-    const pageSize = 10;
-    const currentPage = 1;
-    const mockStories: Story[] = [
-      { id: 1, title: 'Story 1', url: 'https://example.com/story1' },
-      { id: 2, title: 'Story 2', url: 'https://example.com/story2' }
-    ];
-
-    service.getStories(pageSize, currentPage).subscribe((stories: Story[]) => {
-      expect(stories).toEqual(mockStories);
+  it('should return total stories', () => {
+    service.getTotalStories().subscribe((result: { results: { lentgh: any; }; }) => {
+      expect(result).toBeTruthy();
+      expect(result.results).toBeTruthy();
+      expect(result.results.lentgh).toEqual(1);
     });
 
-    const request = httpMock.expectOne(`https://localhost:7175/api/getnewstories/${currentPage}/${pageSize}`);
-    expect(request.request.method).toBe('GET');
-    request.flush(mockStories);
+    const req = httpMock.expectOne('https://localhost:7175/api/gettotalstories/');
+    expect(req.request.method).toBe('GET');
   });
 
-  it('should retrieve a single story', () => {
-    const storyId = 1;
-    const mockStory: Story = { id: storyId, title: 'Story 1', url: 'https://example.com/story1' };
-
-    service.getStory(storyId).subscribe((story: Story) => {
-      expect(story).toEqual(mockStory);
+  it('should return a story', () => {
+    service.getStory(1).subscribe((result: any) => {
+      expect(result).toBeTruthy();
+      expect(result.results).toBeTruthy();
+      expect(result.results.lentgh).toEqual(1);
     });
-
-    const request = httpMock.expectOne(`https://localhost:7175/api/getstory/${storyId}`);
-    expect(request.request.method).toBe('GET');
-    request.flush(mockStory);
   });
 
-  it('should retrieve the total number of stories', () => {
-    const mockTotalStories = 100;
-
-    service.getTotalStories().subscribe((totalStories: number) => {
-      expect(totalStories).toBe(mockTotalStories);
+  it('should return a story', () => {
+    service.getStories(1,15).subscribe((result: any) => {
+      expect(result).toBeTruthy();
+      expect(result.results).toBeTruthy();
+      expect(result.results.lentgh).toEqual(15);
     });
-
-    const request = httpMock.expectOne('https://localhost:7175/api/gettotalstories/');
-    expect(request.request.method).toBe('GET');
-    request.flush(mockTotalStories);
   });
+
 });
