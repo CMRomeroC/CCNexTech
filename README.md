@@ -18,7 +18,7 @@ At a minimum, the back-end API should consist of:
  
 While we would love seeing an Angular only solution to this problem, we really need to see your CSharpness.
  
-If you're up for it, upload your code challenge to an Azure website and send us the link! Azure websites have free trial periods so you don't have to pay a dime :)
+If you're up for it, upload your code challenge to an Azure website and send us the link! Azure websites have free trial periods so you don't have to pay a dime :) (https://hackapinews.azurewebsites.net)
  
 Put the final solution in a GitHub repository for our review and send us the link.
 Your solution will not be considered for the following reasons:
